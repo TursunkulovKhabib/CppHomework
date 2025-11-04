@@ -48,10 +48,9 @@ struct Div {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-template <typename R1, typename R2> using sum      = typename Sum<R1, R2>::type;
-template <typename R1, typename R2> using sub      = typename Sub<R1, R2>::type;
-template <typename R1, typename R2> using mul      = typename Mul<R1, R2>::type;
-// renamed to avoid clash with C library div
+template <typename R1, typename R2> using sum = typename Sum<R1, R2>::type;
+template <typename R1, typename R2> using sub = typename Sub<R1, R2>::type;
+template <typename R1, typename R2> using mul = typename Mul<R1, R2>::type;
 template <typename R1, typename R2> using ratio_div = typename Div<R1, R2>::type;
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +82,7 @@ constexpr auto operator-(Duration<T1, R1> const& lhs, Duration<T2, R2> const& rh
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-    // Tests
+    // Tests for ratio operations
     static_assert(sum<Ratio<1,2>, Ratio<1,3>>::num == 5);
     static_assert(sum<Ratio<1,2>, Ratio<1,3>>::den == 6);
 
@@ -96,21 +95,14 @@ int main() {
     static_assert(ratio_div<Ratio<1,2>, Ratio<2,3>>::num == 3);
     static_assert(ratio_div<Ratio<1,2>, Ratio<2,3>>::den == 4);
 
-    // ----------------------------------------------------------------------
-
+    // Tests for Duration operations
     auto x = 1, y = 2;
-
-    // ----------------------------------------------------------------------
 
     Duration<int, Ratio<1,2>> duration_1{x};
     Duration<int, Ratio<1,3>> duration_2{y};
 
-    // ----------------------------------------------------------------------
-
     Duration<int, Ratio<1,6>> duration_3 = duration_1 + duration_2;
     Duration<int, Ratio<1,6>> duration_4 = duration_1 - duration_2;
-
-    // ----------------------------------------------------------------------
 
     assert(duration_3.x == 7);
     assert(duration_4.x == -1);
